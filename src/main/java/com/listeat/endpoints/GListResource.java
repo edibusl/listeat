@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.awt.font.GlyphJustificationInfo;
 import java.util.List;
 
 @Path("glist")
@@ -15,26 +16,28 @@ public class GListResource extends BaseResource{
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public GList create(@PathParam("userId") int userId, GList glist) throws Exception{
+        EntityManager session = null;
         try {
-            EntityManager session = this.createSession();
-
-            Query q = session.createQuery("select u from User u");
-            List<User> users = q.getResultList();
-            String message = "Users are: ";
-            for (User user : users) {
-                message += user.getUsername() + ",";
-            }
-
+            session = this.createSession();
             session.getTransaction().begin();
-            session.persist(glist);
-            session.getTransaction().commit();
-            session.close();
-            return glist;
 
-            //return type Response:  return Response.status(201).entity("Glist saved").build();
+            //Find the user in DB and add it to the list of users of this glist
+            User user = session.find(User.class, userId);
+            glist.getUsers().add(user);
+            //Add this glist to the DB
+            session.persist(glist);
+
+            session.getTransaction().commit();
+
+            return glist;
         }catch (Exception ex){
-            int x = 1;
             throw ex;
+        }
+        finally {
+            session.close();
         }
     }
 }
+
+
+//return type Response:  return Response.status(201).entity("Glist saved").build();

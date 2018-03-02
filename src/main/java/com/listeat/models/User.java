@@ -1,43 +1,37 @@
 package com.listeat.models;
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 @Entity
 @Table(name="users")
+@Data
+@XmlRootElement(name="User")
+@XmlAccessorType(XmlAccessType.FIELD)
+@lombok.EqualsAndHashCode(exclude={"glists"}) //Explanation at GList class
+@lombok.ToString(exclude = "glists") //Explanation at GList class
 public class User implements Serializable {
-    private static final long serialVersionUID = 1L;
-
     @Id
-    @Column(name="user_id")
-    private int UserId;
+    private int user_id;
 
-    @Column(name="username")
-    private String Username;
+    private String username;
 
-    @Column(name="last_login")
     @Temporal(TemporalType.DATE)
-    private Date LastLogin;
+    private Date last_login;
 
-
-    public int getUserId() {
-        return this.UserId;
-    }
-    public void setUserId(int userId) {
-        this.UserId = userId;
-    }
-
-    public String getUsername() {
-        return this.Username;
-    }
-    public void setUsername(String username) {
-        this.Username = username;
-    }
-
-    public Date getLastLogin() {
-        return this.LastLogin;
-    }
-    public void setLastLogin(Date lastLogin) {
-        this.LastLogin = lastLogin;
-    }
+    @lombok.Getter(onMethod = @__( @JsonIgnore )) //Explanation at GList class
+    @ManyToMany(mappedBy = "users")
+    public List<GList> glists = new ArrayList<GList>();
 }
