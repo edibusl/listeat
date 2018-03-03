@@ -29,7 +29,7 @@ public class GList implements Serializable {
     @XmlTransient ///To prevent stack-overflow exception during serialization to XML due to circular dependencies
     @ManyToMany
     @JoinTable(name = "glists_users",
-            joinColumns = @JoinColumn(name="glist_id", referencedColumnName = "glist_id"),
+            joinColumns = @JoinColumn(name = "glist_id", referencedColumnName = "glist_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     )
     public List<User> users = new ArrayList<User>();
