@@ -56,6 +56,6 @@ public class Main {
      * @return base {@link URI}.
      */
     private static URI getBaseURI() {
-        return UriBuilder.fromUri("http://localhost/").port(9090).build();
+        return UriBuilder.fromUri("http://0.0.0.0/").port(9090).build();
     }
 }

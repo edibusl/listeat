@@ -4,6 +4,10 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>com.listeat.models.User</class>
         <class>com.listeat.models.GList</class>
+        <class>com.listeat.models.GItem</class>
+        <class>com.listeat.models.Product</class>
+        <class>com.listeat.models.Cart</class>
+        <class>com.listeat.models.Category</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/listeat?useSSL=false" />
