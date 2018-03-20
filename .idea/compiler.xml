@@ -9,8 +9,8 @@
         <module name="listeat" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="listeat" target="1.6" />
+    <bytecodeTargetLevel target="8">
+      <module name="listeat" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

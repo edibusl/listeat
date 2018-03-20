@@ -12,6 +12,9 @@ public abstract class BaseResource {
     }
 
     protected EntityManager createSession() {
+        //Clear cache before starting a fresh new entity manager session
+        factory.getCache().evictAll();
+
         return this.factory.createEntityManager();
     }
 }

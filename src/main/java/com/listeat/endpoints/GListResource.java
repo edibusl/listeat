@@ -5,12 +5,13 @@ import com.listeat.models.GList;
 import com.listeat.models.User;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Console;
+import java.util.*;
 
 @Path("glist")
 public class GListResource extends BaseResource{
@@ -64,32 +65,17 @@ public class GListResource extends BaseResource{
             session = this.createSession();
             fullInfo.gList = session.find(GList.class, glistId);
 
+            //Get all GItems that belong to this GList and create a new cloned list prepared for sorting them
+            //We need to clone the list, otherwise the sorting won't work
+            List<GItem> gItems = new ArrayList<>(fullInfo.gList.getGitems());
 
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //TODO - For some reason objects are not from session to session
-            //Try to query an object, then change it in DB and query again
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //Sort by category id
+            Collections.sort(gItems, Comparator.<GItem> comparingInt(o -> o.getProduct().getCategory().getCategory_id()).thenComparingInt(o -> o.getProduct().getCategory().getCategory_id()));
 
+            //Set the response
+            fullInfo.gItems = gItems;
 
-            //Get all GItems that belong to this GList
-            fullInfo.gItems = fullInfo.gList.getGitems();
+            //Set product_obj of every gItem (for the response object)
             for (GItem item : fullInfo.gItems){
                 item.setProduct_obj(item.getProduct());
             }
