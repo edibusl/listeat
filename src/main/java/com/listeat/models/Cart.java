@@ -15,7 +15,8 @@ import java.sql.Date;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Cart {
     @Id
-    private int cart_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long cart_id;
 
     @XmlJavaTypeAdapter(SqlDateAdapter.class)
     private Date purchase_time;

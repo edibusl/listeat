@@ -17,6 +17,8 @@ public class JaxRsApplication extends Application {
     public JaxRsApplication() {
         HashSet<Class<?>> c = new HashSet<Class<?>>();
         c.add(GListResource.class);
+        c.add(ProductResource.class);
+        c.add(GItemResource.class);
         classes = Collections.unmodifiableSet(c);
     }
 

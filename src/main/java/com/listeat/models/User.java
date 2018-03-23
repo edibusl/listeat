@@ -13,14 +13,15 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name="users")
-@XmlRootElement(name="User")
+@XmlRootElement()
 @XmlAccessorType(XmlAccessType.FIELD)
 @lombok.Data
-@lombok.EqualsAndHashCode(exclude={"glists"}) //Explanation at GList class
+@lombok.EqualsAndHashCode(exclude={"glists", "gitems"}) //Explanation at GList class
 @lombok.ToString(exclude = "glists") //Explanation at GList class
 public class User implements Serializable {
     @Id
-    private int user_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long user_id;
 
     private String username;
 
@@ -30,5 +31,10 @@ public class User implements Serializable {
     @lombok.Getter(onMethod = @__(@JsonIgnore)) //Explanation at GList class
     @ManyToMany(mappedBy = "users")
     @XmlTransient
-    public List<GList> glists = new ArrayList<GList>();
+    public List<GList> glists = new ArrayList<>();
+
+    @lombok.Getter(onMethod = @__(@JsonIgnore))
+    @XmlTransient
+    @OneToMany(mappedBy = "user")
+    public List<GItem> gitems;
 }

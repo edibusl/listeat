@@ -16,11 +16,13 @@ import java.sql.Date;
 @XmlRootElement()
 @XmlAccessorType(XmlAccessType.FIELD)
 @lombok.Data
-@lombok.EqualsAndHashCode(exclude={"glist", "product"}) //To prevent stack-overflow exception during commit due to circular dependencies
+@lombok.EqualsAndHashCode(exclude={"glist", "product", "user"}) //To prevent stack-overflow exception during commit due to circular dependencies
 @lombok.ToString(of = "gitem_id") //To prevent stack-overflow exception in any case when calling toString
 public class GItem {
     @Id
-    private int gitem_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long gitem_id;
+
     private Integer quantity;
     private Integer weight;
 
@@ -37,7 +39,13 @@ public class GItem {
     private GList glist;
 
     @lombok.Getter(onMethod = @__(@JsonIgnore))
-    @XmlTransient //To prevent stack-overflow exception during serialization to XML due to circular dependencies
+    @XmlTransient
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="user_id", referencedColumnName = "user_id")
+    private User user;
+
+    @lombok.Getter(onMethod = @__(@JsonIgnore))
+    @XmlTransient
     @ManyToOne(fetch=FetchType.EAGER) //Eager load because a Product object is a must when describing a GItem (it's always needed)
     @JoinColumn(name="product_id")
     private Product product;
@@ -66,5 +74,49 @@ public class GItem {
         }
 
         this.product_obj = obj;
+    }
+
+    @lombok.Getter(AccessLevel.NONE)
+    @lombok.Setter(AccessLevel.NONE)
+    @Transient
+    private Long user_id;
+    public Long getUserId() {
+        return user_id;
+    }
+    public void setUserId(Long user_id) {
+        this.user_id = user_id;
+    }
+
+    @lombok.Getter(AccessLevel.NONE)
+    @lombok.Setter(AccessLevel.NONE)
+    @Transient
+    private Long product_id;
+    public Long getProductId() {
+        return product_id;
+    }
+    public void setProductId(Long product_id) {
+        this.product_id = product_id;
+    }
+
+    @lombok.Getter(AccessLevel.NONE)
+    @lombok.Setter(AccessLevel.NONE)
+    @Transient
+    private Long glist_id;
+    public Long getGlistId() {
+        return glist_id;
+    }
+    public void setGlistId(Long glist_id) {
+        this.glist_id = glist_id;
+    }
+
+    @lombok.Getter(AccessLevel.NONE)
+    @lombok.Setter(AccessLevel.NONE)
+    @Transient
+    private Long cart_id;
+    public Long getCartId() {
+        return cart_id;
+    }
+    public void setCartId(Long cart_id) {
+        this.cart_id = cart_id;
     }
 }

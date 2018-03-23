@@ -16,7 +16,9 @@ import java.util.List;
 @lombok.ToString(of = "categody_id") //To prevent stack-overflow exception in any case when calling toString
 public class Category {
     @Id
-    private int category_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long category_id;
+
     private String name;
     private String description;
 

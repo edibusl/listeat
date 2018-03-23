@@ -19,7 +19,7 @@ public class GListResource extends BaseResource{
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     //Get the list of all GLists that belong to a specific user
-    public List<GList> getUserLists(@PathParam("userId") int userId) throws Exception{
+    public List<GList> getUserLists(@PathParam("userId") long userId) throws Exception{
         EntityManager session = null;
         try {
             session = this.createSession();
@@ -70,7 +70,7 @@ public class GListResource extends BaseResource{
             List<GItem> gItems = new ArrayList<>(fullInfo.gList.getGitems());
 
             //Sort by category id
-            Collections.sort(gItems, Comparator.<GItem> comparingInt(o -> o.getProduct().getCategory().getCategory_id()).thenComparingInt(o -> o.getProduct().getCategory().getCategory_id()));
+            Collections.sort(gItems, Comparator.<GItem> comparingLong(o -> o.getProduct().getCategory().getCategory_id()).thenComparingLong(o -> o.getProduct().getCategory().getCategory_id()));
 
             //Set the response
             fullInfo.gItems = gItems;

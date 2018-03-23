@@ -17,7 +17,7 @@ import java.util.List;
 @lombok.ToString(of = "product_id") //To prevent stack-overflow exception in any case when calling toString
 public class Product {
     @Id
-    private int product_id;
+    private long product_id;
     private String name;
     private String description;
     private String image_path;
