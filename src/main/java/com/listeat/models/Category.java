@@ -21,9 +21,4 @@ public class Category {
 
     private String name;
     private String description;
-
-    @lombok.Getter(onMethod = @__(@JsonIgnore))
-    @XmlTransient
-    @OneToMany(mappedBy = "category")
-    public List<Product> products;
 }

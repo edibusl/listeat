@@ -1,9 +1,6 @@
 package com.listeat.endpoints;
 
-import com.listeat.models.GItem;
-import com.listeat.models.GList;
-import com.listeat.models.Product;
-import com.listeat.models.User;
+import com.listeat.models.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -14,23 +11,19 @@ import java.util.List;
 
 @Path("product")
 public class ProductResource extends BaseResource{
-    @GET @Path("/autocomplete/{text}")
+    @GET @Path("/autocomplete/{gListId}/{text}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    //Get the list of all GLists that belong to a specific user
-    public List<Product> getProductsByAutoComplete(@PathParam("text") String text) throws Exception{
+    public List<Product> getProductsByAutoComplete(@PathParam("gListId") long gListId, @PathParam("text") String text) throws Exception{
         EntityManager session = null;
         try {
             session = this.createSession();
 
-            TypedQuery<Product> query = session.createQuery("SELECT p FROM Product p WHERE p.name LIKE :productNameText", Product.class);
+            //Select only products that are public (i.e. glist_id=NULL) or that they belong to our gList.
+            TypedQuery<Product> query = session.createQuery("SELECT p FROM Product p WHERE p.name LIKE :productNameText AND (p.glist.glist_id = NULL OR p.glist.glist_id = :gListId)", Product.class);
             query.setParameter("productNameText", MessageFormat.format("%{0}%", text));
+            query.setParameter("gListId", gListId);
             List<Product> products = query.getResultList();
-
-            //Set product_obj of every gItem (for the response object)
-            for (Product product : products){
-                product.setCategory_obj(product.getCategory());
-            }
 
             return products;
         } catch (Exception ex){
@@ -41,25 +34,24 @@ public class ProductResource extends BaseResource{
         }
     }
 
-    @POST @Path("/{glistId}")
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    //Create a new GList
-    public Product create(@PathParam("glistId") int glistId, Product product) throws Exception{
+    //Create a new Product
+    public Product create(Product product) throws Exception{
         EntityManager session = null;
         try {
             session = this.createSession();
             session.getTransaction().begin();
 
-//            //Find the user in DB and add it to the list of users of this gList
-//            User user = session.find(User.class, userId);
-//            glist.getUsers().add(user);
-//            //Add this gList to the DB
-//            session.persist(glist);
-//
-//            session.getTransaction().commit();
-//
+            Category category = session.find(Category.class, product.getCategory_id());
+            product.setCategory(category);
+
+            GList glist = session.find(GList.class, product.getGlist_id());
+            product.setGlist(glist);
+
             session.persist(product);
+            session.getTransaction().commit();
 
             return product;
         }catch (Exception ex){
