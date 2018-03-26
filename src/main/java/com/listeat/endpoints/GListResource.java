@@ -94,7 +94,7 @@ public class GListResource extends BaseResource{
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     //Create a new GList
-    public GList create(@PathParam("userId") int userId, GList glist) throws Exception{
+    public GList create(@PathParam("userId") long userId, GList glist) throws Exception{
         EntityManager session = null;
         try {
             session = this.createSession();
@@ -117,11 +117,11 @@ public class GListResource extends BaseResource{
         }
     }
 
-    @PUT @Path("/{glistId}")
+    @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     //Update a GList object
-    public Response updateList(@PathParam("glistId") long glistId, GList glist) throws Exception{
+    public Response updateList(GList glist) throws Exception{
         EntityManager session = null;
         try {
             session = this.createSession();
@@ -129,14 +129,14 @@ public class GListResource extends BaseResource{
 
             //We can't use session.merge() to update a detached entity, since the gList in the request
             //doesn't include the users list, so when merging, the users list in DB will be dropped in this case.
-            GList managedGList = session.find(GList.class, glistId);
+            GList managedGList = session.find(GList.class, glist.getGlist_id());
             managedGList.setSubject(glist.getSubject());
             managedGList.setDescription(glist.getDescription());
 
             session.persist(managedGList);
             session.getTransaction().commit();
 
-            return Response.status(200).entity("[]").build();
+            return Response.status(200).entity("{}").build();
         } catch (Exception ex){
             throw ex;
         }
@@ -145,22 +145,29 @@ public class GListResource extends BaseResource{
         }
     }
 
-    @DELETE @Path("/{glistId}")
+    @DELETE @Path("/{glistId}/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     //Delete a GList object
-    public Response deleteList(@PathParam("glistId") long glistId) throws Exception{
+    public Response deleteList(@PathParam("glistId") long glistId, @PathParam("userId") Long userId) throws Exception{
         EntityManager session = null;
         try {
             session = this.createSession();
             session.getTransaction().begin();
 
-            GList managedGList = session.find(GList.class, glistId);
-            session.remove(managedGList);
+            //An actual delete is not done because it's a shared list - we just remove the user from the list
+            //Find the glist in DB and remove this user from its list
+            GList glist = session.find(GList.class, glistId);
+
+            List<User> users = new ArrayList<>(glist.getUsers());
+            users.removeIf(user -> user.getUser_id() == userId);
+            glist.setUsers(users);
+
+            session.persist(glist);
 
             session.getTransaction().commit();
 
-            return Response.status(200).entity("[]").build();
+            return Response.status(200).entity("{}").build();
         } catch (Exception ex){
             throw ex;
         }

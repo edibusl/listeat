@@ -13,11 +13,12 @@ import java.sql.Date;
 
 @Path("gitem")
 public class GItemResource extends BaseResource{
-    @POST
+    @POST @Path("/{glistId}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     //Create a new GItem
-    public GItem create(GItem gItem) throws Exception{
+    //(glistId is needed just for consistency across all REST endpoints)
+    public GItem create(@PathParam("glistId") int glistId, GItem gItem) throws Exception{
         return upsert(gItem);
     }
 
