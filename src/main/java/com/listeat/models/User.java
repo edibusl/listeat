@@ -28,13 +28,11 @@ public class User implements Serializable {
     @XmlJavaTypeAdapter(SqlDateAdapter.class)
     private Date last_login;
 
-    @lombok.Getter(onMethod = @__(@JsonIgnore)) //Explanation at GList class
     @ManyToMany(mappedBy = "users")
-    @XmlTransient
+    @XmlTransient @lombok.Getter(onMethod = @__(@XmlTransient))
     public List<GList> glists = new ArrayList<>();
 
-    @lombok.Getter(onMethod = @__(@JsonIgnore))
-    @XmlTransient
+    @XmlTransient @lombok.Getter(onMethod = @__(@XmlTransient))
     @OneToMany(mappedBy = "user")
     public List<GItem> gitems;
 }

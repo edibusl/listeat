@@ -175,6 +175,40 @@ public class GListResource extends BaseResource{
             session.close();
         }
     }
+
+    @PUT @Path("/addUserToGList")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    //Update a GList object
+    public Response addUserToGList(GListAddUser requestData) throws Exception{
+        EntityManager session = null;
+        try {
+            session = this.createSession();
+            session.getTransaction().begin();
+
+            //Find in DB the glist and the user to add
+            GList glist = session.find(GList.class, requestData.glist_id);
+            User newUser = session.find(User.class, requestData.user_id);
+
+            //Remove the user from the list of users of this glist (to be sure that it won't appear duplicated)
+            List<User> users = new ArrayList<>(glist.getUsers());
+            users.removeIf(user -> user.getUser_id() == requestData.user_id);
+
+            //Add the user and save
+            users.add(newUser);
+            glist.setUsers(users);
+            session.persist(glist);
+
+            session.getTransaction().commit();
+
+            return Response.status(200).entity("{}").build();
+        } catch (Exception ex){
+            throw ex;
+        }
+        finally {
+            session.close();
+        }
+    }
 }
 
 
@@ -182,4 +216,10 @@ public class GListResource extends BaseResource{
 class GListFullInfo{
     public GList gList;
     public List<GItem> gItems;
+}
+
+@XmlRootElement()
+class GListAddUser{
+    public Long glist_id;
+    public Long user_id;
 }
