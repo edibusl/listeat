@@ -1,5 +1,6 @@
 package com.listeat.endpoints;
 
+import com.listeat.models.Cart;
 import com.listeat.models.GItem;
 import com.listeat.models.GList;
 import com.listeat.models.User;
@@ -179,7 +180,6 @@ public class GListResource extends BaseResource{
     @PUT @Path("/addUserToGList")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    //Update a GList object
     public Response addUserToGList(GListAddUser requestData) throws Exception{
         EntityManager session = null;
         try {
@@ -197,6 +197,47 @@ public class GListResource extends BaseResource{
             //Add the user and save
             users.add(newUser);
             glist.setUsers(users);
+            session.persist(glist);
+
+            session.getTransaction().commit();
+
+            return Response.status(200).entity("{}").build();
+        } catch (Exception ex){
+            throw ex;
+        }
+        finally {
+            session.close();
+        }
+    }
+
+    @POST @Path("/purchase/{glistId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response purchase(@PathParam("glistId") long glistId) throws Exception{
+        EntityManager session = null;
+        try {
+            session = this.createSession();
+            session.getTransaction().begin();
+
+            //Find in DB the glist
+            GList glist = session.find(GList.class, glistId);
+
+            //Add a new Cart object to hold the purchase
+            Cart cart = new Cart();
+            java.util.Date curDate = new java.util.Date();
+            cart.setPurchase_time(new java.sql.Date(curDate.getTime()));
+            cart.setGlist_id(glistId);
+            session.persist(cart);
+
+            //Move all checked items from the glist to the new cart
+            for(GItem gItem : glist.getGitems()) {
+                if(gItem.getIs_checked()) {
+                    gItem.setCart(cart);
+                    gItem.setGlist(null);
+                    session.persist(gItem);
+                }
+            }
+
+            //Set the new items and commit everything
             session.persist(glist);
 
             session.getTransaction().commit();

@@ -25,6 +25,7 @@ public class GItem {
 
     private Integer quantity;
     private Integer weight;
+    private Boolean is_checked;
 
     @XmlJavaTypeAdapter(SqlDateAdapter.class)
     private Date created_time;
@@ -36,6 +37,11 @@ public class GItem {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="glist_id")
     private GList glist;
+
+    @XmlTransient @lombok.Getter(onMethod = @__(@XmlTransient))
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="cart_id")
+    private Cart cart;
 
     @XmlTransient @lombok.Getter(onMethod = @__(@XmlTransient))
     @ManyToOne(fetch=FetchType.LAZY)
