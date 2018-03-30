@@ -24,6 +24,8 @@ public class User implements Serializable {
     private Long user_id;
 
     private String username;
+    private String name;
+    private String profile_image;
 
     @XmlJavaTypeAdapter(SqlDateAdapter.class)
     private Date last_login;
