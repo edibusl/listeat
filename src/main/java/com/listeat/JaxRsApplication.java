@@ -21,6 +21,7 @@ public class JaxRsApplication extends Application {
         c.add(GItemResource.class);
         c.add(CategoryResource.class);
         c.add(UserResource.class);
+        c.add(StatisticsResource.class);
         classes = Collections.unmodifiableSet(c);
     }
 
