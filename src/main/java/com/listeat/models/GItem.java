@@ -25,7 +25,7 @@ public class GItem {
 
     private Integer quantity;
     private Integer weight;
-    private Boolean is_checked;
+    private Boolean is_checked = false;
 
     @XmlJavaTypeAdapter(SqlDateAdapter.class)
     private Date created_time;

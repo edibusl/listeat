@@ -230,7 +230,8 @@ public class GListResource extends BaseResource{
 
             //Move all checked items from the glist to the new cart
             for(GItem gItem : glist.getGitems()) {
-                if(gItem.getIs_checked()) {
+                Boolean isChecked = gItem.getIs_checked();
+                if(isChecked != null && isChecked == true) {
                     gItem.setCart(cart);
                     gItem.setGlist(null);
                     session.persist(gItem);
