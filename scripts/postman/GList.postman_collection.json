@@ -1,0 +1,211 @@
+{
+	"variables": [],
+	"info": {
+		"name": "GList",
+		"_postman_id": "f0ef4574-29a0-8b30-9539-3f2373bdec72",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create GList",
+			"request": {
+				"url": "http://localhost:9090/glist/2",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"subject\": \"My first list\",\n\t\"description\": \"This is the first item\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "List all GLists of a user",
+			"request": {
+				"url": "http://localhost:9090/glist/all/2",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get GList full info",
+			"request": {
+				"url": "http://localhost:9090/glist/fullInfo/21",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get a GList",
+			"request": {
+				"url": "http://localhost:9090/glist/info/21",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update GList",
+			"request": {
+				"url": "http://localhost:9090/glist",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"subject\": \"Updated subject\",\n\t\"description\": \"Updated description\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add user to glist",
+			"request": {
+				"url": "http://localhost:9090/glist/addUserToGList",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"glist_id\": 21,\n\t\"user_id\": 4\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete GList",
+			"request": {
+				"url": "http://localhost:9090/glist/36/2",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Purchase",
+			"request": {
+				"url": "http://localhost:9090/glist/purchase/21",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

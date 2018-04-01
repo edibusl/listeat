@@ -1,0 +1,36 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Statistics",
+		"_postman_id": "835f3eb9-a962-eada-ce33-9803961a3642",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get statistics",
+			"request": {
+				"url": "http://localhost:9090/stats/bycategory/2",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

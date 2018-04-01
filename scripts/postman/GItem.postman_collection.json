@@ -1,0 +1,86 @@
+{
+	"variables": [],
+	"info": {
+		"name": "GItem",
+		"_postman_id": "ef663040-2039-eb68-8ec9-c688beb0a58c",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create GItem (add it to a GList)",
+			"request": {
+				"url": "http://localhost:9090/gitem/2",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"quantity\": 8,\n\t\"comments\": \"Some comments\",\n\t\"user_id\": 2,\n\t\"product_id\": 7,\n\t\"glist_id\": 21\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update GItem",
+			"request": {
+				"url": "http://localhost:9090/gitem",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"quantity\": 8,\n\t\"comments\": \"Some comments\",\n\t\"user_id\": 2,\n\t\"product_id\": 7,\n\t\"glist_id\": 21\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete GItem copy",
+			"request": {
+				"url": "http://localhost:9090/gitem/32",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

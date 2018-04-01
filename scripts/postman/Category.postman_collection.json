@@ -1,0 +1,36 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Category",
+		"_postman_id": "5c4c3ed5-c24a-2655-1ad2-a7823f72abf3",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all categories",
+			"request": {
+				"url": "http://localhost:9090/category/all",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

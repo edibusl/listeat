@@ -1,0 +1,61 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Product",
+		"_postman_id": "ca9b3ebf-dd27-2768-15ed-05262502b469",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Search product for auto complete",
+			"request": {
+				"url": "http://localhost:9090/product/autocomplete/21/נק",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Product",
+			"request": {
+				"url": "http://localhost:9090/product",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"glist_id\": 21,\n\t\"category_id\": 2,\n\t\"name\": \"נקניק עגל\",\n\t\"description\": \"של זוגלובק\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
