@@ -5,8 +5,18 @@ import java.net.URI;
 import java.net.InetSocketAddress;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.ext.RuntimeDelegate;
+
+import com.sun.jersey.api.core.DefaultResourceConfig;
+import com.sun.jersey.api.core.PackagesResourceConfig;
+import com.sun.jersey.api.core.ResourceConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
+import com.sun.jersey.core.impl.provider.entity.XMLJAXBElementProvider;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import com.sun.xml.internal.ws.developer.SerializationFeature;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
+import org.codehaus.jackson.map.ObjectMapper;
 
 
 public class Main {
@@ -39,7 +49,11 @@ public class Main {
         }));
 
         // create a handler wrapping the JAX-RS application
-        HttpHandler handler = RuntimeDelegate.getInstance().createEndpoint(new JaxRsApplication(), HttpHandler.class);
+        ResourceConfig rc = new DefaultResourceConfig(
+            JacksonJsonProvider.class
+        );
+        rc.add(new JaxRsApplication());
+        HttpHandler handler = RuntimeDelegate.getInstance().createEndpoint(rc, HttpHandler.class);
 
         // map JAX-RS handler to the server root
         server.createContext(getBaseURI().getPath(), handler);

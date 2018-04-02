@@ -1,5 +1,6 @@
 package com.listeat.endpoints;
 
+import com.listeat.helpers.StatusResponse;
 import com.listeat.models.Cart;
 import com.listeat.models.GItem;
 import com.listeat.models.GList;
@@ -76,11 +77,6 @@ public class GListResource extends BaseResource{
             //Set the response
             fullInfo.gItems = gItems;
 
-            //Set product_obj of every gItem (for the response object)
-            for (GItem item : fullInfo.gItems){
-                item.setProduct_obj(item.getProduct());
-            }
-
             return fullInfo;
 
         } catch (Exception ex){
@@ -122,7 +118,7 @@ public class GListResource extends BaseResource{
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     //Update a GList object
-    public Response updateList(GList glist) throws Exception{
+    public StatusResponse updateList(GList glist) throws Exception{
         EntityManager session = null;
         try {
             session = this.createSession();
@@ -137,7 +133,7 @@ public class GListResource extends BaseResource{
             session.persist(managedGList);
             session.getTransaction().commit();
 
-            return Response.status(200).entity("{}").build();
+            return new StatusResponse();
         } catch (Exception ex){
             throw ex;
         }
@@ -150,7 +146,7 @@ public class GListResource extends BaseResource{
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     //Delete a GList object
-    public Response deleteList(@PathParam("glistId") long glistId, @PathParam("userId") Long userId) throws Exception{
+    public StatusResponse deleteList(@PathParam("glistId") long glistId, @PathParam("userId") Long userId) throws Exception{
         EntityManager session = null;
         try {
             session = this.createSession();
@@ -168,7 +164,7 @@ public class GListResource extends BaseResource{
 
             session.getTransaction().commit();
 
-            return Response.status(200).entity("{}").build();
+            return new StatusResponse();
         } catch (Exception ex){
             throw ex;
         }
@@ -180,7 +176,7 @@ public class GListResource extends BaseResource{
     @PUT @Path("/addUserToGList")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addUserToGList(GListAddUser requestData) throws Exception{
+    public StatusResponse addUserToGList(GListAddUser requestData) throws Exception{
         EntityManager session = null;
         try {
             session = this.createSession();
@@ -201,7 +197,7 @@ public class GListResource extends BaseResource{
 
             session.getTransaction().commit();
 
-            return Response.status(200).entity("{}").build();
+            return new StatusResponse();
         } catch (Exception ex){
             throw ex;
         }
@@ -212,7 +208,7 @@ public class GListResource extends BaseResource{
 
     @POST @Path("/purchase/{glistId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response purchase(@PathParam("glistId") long glistId) throws Exception{
+    public StatusResponse purchase(@PathParam("glistId") long glistId) throws Exception{
         EntityManager session = null;
         try {
             session = this.createSession();
@@ -243,7 +239,7 @@ public class GListResource extends BaseResource{
 
             session.getTransaction().commit();
 
-            return Response.status(200).entity("{}").build();
+            return new StatusResponse();
         } catch (Exception ex){
             throw ex;
         }

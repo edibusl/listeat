@@ -31,10 +31,11 @@ public class User implements Serializable {
     private Date last_login;
 
     @ManyToMany(mappedBy = "users")
-    @XmlTransient @lombok.Getter(onMethod = @__(@XmlTransient))
+    @JsonIgnore
+    @lombok.Getter(onMethod = @__(@JsonIgnore))
     public List<GList> glists = new ArrayList<>();
 
-    @XmlTransient @lombok.Getter(onMethod = @__(@XmlTransient))
+    @JsonIgnore @lombok.Getter(onMethod = @__(@JsonIgnore))
     @OneToMany(mappedBy = "user")
     public List<GItem> gitems;
 }

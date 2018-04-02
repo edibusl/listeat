@@ -1,5 +1,6 @@
 package com.listeat.endpoints;
 
+import com.listeat.helpers.StatusResponse;
 import com.listeat.models.GItem;
 import com.listeat.models.GList;
 import com.listeat.models.Product;
@@ -34,7 +35,7 @@ public class GItemResource extends BaseResource{
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     //Delete a GItem object
-    public Response deleteItem(@PathParam("gItemId") long gItemId) throws Exception{
+    public StatusResponse deleteItem(@PathParam("gItemId") long gItemId) throws Exception{
         EntityManager session = null;
         try {
             session = this.createSession();
@@ -45,7 +46,7 @@ public class GItemResource extends BaseResource{
 
             session.getTransaction().commit();
 
-            return Response.status(200).entity("{}").build();
+            return new StatusResponse();
         } catch (Exception ex){
             throw ex;
         }
@@ -68,11 +69,11 @@ public class GItemResource extends BaseResource{
             }
 
             //Set FK fields
-            User user = session.find(User.class, gItem.getUserId());
+            User user = session.find(User.class, gItem.getUser_id());
             gItem.setUser(user);
-            Product product = session.find(Product.class, gItem.getProductId());
+            Product product = session.find(Product.class, gItem.getProduct_id());
             gItem.setProduct(product);
-            GList gList = session.find(GList.class, gItem.getGlistId());
+            GList gList = session.find(GList.class, gItem.getGlist_id());
             gItem.setGlist(gList);
 
             //Set creation time
