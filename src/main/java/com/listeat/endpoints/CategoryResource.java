@@ -1,13 +1,11 @@
 package com.listeat.endpoints;
 
 import com.listeat.models.Category;
-import com.listeat.models.Product;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.text.MessageFormat;
 import java.util.List;
 
 @Path("category")

@@ -9,7 +9,6 @@ import com.listeat.models.User;
 import javax.persistence.EntityManager;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.sql.Date;
 
 @Path("gitem")
@@ -78,7 +77,7 @@ public class GItemResource extends BaseResource{
 
             //Set creation time
             java.util.Date curDate = new java.util.Date();
-            gItem.setCreated_time(new Date(curDate.getTime()));
+            gItem.setCreated_date(new Date(curDate.getTime()));
 
             if(isNew) {
                 //Save new object

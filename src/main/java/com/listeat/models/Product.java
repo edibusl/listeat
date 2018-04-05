@@ -6,13 +6,10 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 
 @Entity
 @Table(name = "products")
-@XmlRootElement()
 @lombok.Data
 @lombok.EqualsAndHashCode(exclude={"gitems"}) //To prevent stack-overflow exception during commit due to circular dependencies
 @lombok.ToString(of = "product_id") //To prevent stack-overflow exception in any case when calling toString

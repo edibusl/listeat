@@ -6,11 +6,6 @@ import java.util.Set;
 import javax.ws.rs.core.Application;
 import com.listeat.endpoints.*;
 
-/**
- * JAX-RS Application class for this example.
- *
- * @author Martin Matula
- */
 public class JaxRsApplication extends Application {
     private final Set<Class<?>> classes;
 

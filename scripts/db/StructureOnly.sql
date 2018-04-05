@@ -25,11 +25,11 @@ DROP TABLE IF EXISTS `carts`;
 CREATE TABLE `carts` (
   `cart_id` int(11) NOT NULL AUTO_INCREMENT,
   `glist_id` int(11) DEFAULT NULL,
-  `purchase_time` datetime DEFAULT NULL,
+  `purchase_date` datetime DEFAULT NULL,
   PRIMARY KEY (`cart_id`),
   KEY `FK_carts_glists_glist_id_idx` (`glist_id`),
   CONSTRAINT `FK_carts_glists_glist_id` FOREIGN KEY (`glist_id`) REFERENCES `glists` (`glist_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +62,7 @@ CREATE TABLE `gitems` (
   `cart_id` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `weight` int(11) DEFAULT NULL,
-  `created_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `created_date` datetime DEFAULT NULL,
   `comments` text,
   `is_checked` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`gitem_id`),
@@ -74,7 +74,7 @@ CREATE TABLE `gitems` (
   CONSTRAINT `FK_gitems_glists` FOREIGN KEY (`glist_id`) REFERENCES `glists` (`glist_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_gitems_products` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_gitems_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +89,7 @@ CREATE TABLE `glists` (
   `subject` varchar(45) DEFAULT NULL,
   `description` text,
   PRIMARY KEY (`glist_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,7 @@ CREATE TABLE `products` (
   KEY `FK_products_categories_category_id_idx` (`category_id`),
   CONSTRAINT `FK_products_categories_category_id` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_products_glists_glist_id` FOREIGN KEY (`glist_id`) REFERENCES `glists` (`glist_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,4 +157,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-01 23:05:37
+-- Dump completed on 2018-04-05 21:32:02

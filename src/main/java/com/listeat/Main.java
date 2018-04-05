@@ -7,19 +7,15 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.ext.RuntimeDelegate;
 
 import com.sun.jersey.api.core.DefaultResourceConfig;
-import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.api.core.ResourceConfig;
-import com.sun.jersey.api.json.JSONConfiguration;
-import com.sun.jersey.core.impl.provider.entity.XMLJAXBElementProvider;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import com.sun.xml.internal.ws.developer.SerializationFeature;
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
-import org.codehaus.jackson.map.ObjectMapper;
 
 
 public class Main {
+    private static int LISTENING_PORT = 9090;
+
     public static void main(String[] args) throws IOException, InterruptedException
     {
         System.out.println("Starting ListEat Server");
@@ -39,7 +35,7 @@ public class Main {
      */
     private static HttpServer startServer() throws IOException
     {
-        //Create a new server listening at port 9090
+        //Create a new server listening on port 9090
         final HttpServer server = HttpServer.create(new InetSocketAddress(getBaseURI().getPort()), 0);
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             @Override
@@ -48,17 +44,19 @@ public class Main {
             }
         }));
 
-        // create a handler wrapping the JAX-RS application
+        //Create a ResourceConfig class to represent our JaxRs application and add Jackson JSON parser to it
+        //to make it serialize/deserialize all requests and responses using this provider
         ResourceConfig rc = new DefaultResourceConfig(
             JacksonJsonProvider.class
         );
+        //Add our "JaxRsApplication" class that holds all resource classes
         rc.add(new JaxRsApplication());
-        HttpHandler handler = RuntimeDelegate.getInstance().createEndpoint(rc, HttpHandler.class);
 
-        // map JAX-RS handler to the server root
+        //Map JAX-RS handler to the server root
+        HttpHandler handler = RuntimeDelegate.getInstance().createEndpoint(rc, HttpHandler.class);
         server.createContext(getBaseURI().getPath(), handler);
 
-        // start the server
+        //Start the server
         server.start();
 
         return server;
@@ -70,6 +68,7 @@ public class Main {
      * @return base {@link URI}.
      */
     private static URI getBaseURI() {
-        return UriBuilder.fromUri("http://0.0.0.0/").port(9090).build();
+        //Listen on 0.0.0.0 in order to accept connection from inside (localhost) and from outside (network)
+        return UriBuilder.fromUri("http://0.0.0.0/").port(LISTENING_PORT).build();
     }
 }

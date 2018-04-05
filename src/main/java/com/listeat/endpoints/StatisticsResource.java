@@ -48,7 +48,7 @@ public class StatisticsResource extends BaseResource{
                     "            c.glist_id = g.glist_id " +
                     "                AND gu.glist_id = g.glist_id " +
                     "                AND gu.user_id = %s " +
-                    "                AND purchase_time >= '%s') " +
+                    "                AND purchase_date >= '%s') " +
                     "GROUP BY c.name", userId, sDate);
 
             Query q = session.createNativeQuery(sql);

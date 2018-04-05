@@ -1,10 +1,6 @@
 package com.listeat.models;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +9,6 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 @Entity
 @Table(name = "glists")
-@XmlRootElement()
-@XmlAccessorType(XmlAccessType.FIELD)
 @lombok.Data
 @lombok.EqualsAndHashCode(exclude={"users", "gitems"}) //To prevent stack-overflow exception during commit due to circular dependencies
 @lombok.ToString(of = "glist_id") //To prevent stack-overflow exception in any case when calling toString

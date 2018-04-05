@@ -7,12 +7,9 @@ import com.listeat.models.GList;
 import com.listeat.models.User;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Console;
 import java.util.*;
 
 @Path("glist")
@@ -26,9 +23,8 @@ public class GListResource extends BaseResource{
         try {
             session = this.createSession();
             User user = session.find(User.class, userId);
-            List<GList> glists = user.getGlists();
 
-            return glists;
+            return user.getGlists();
         } catch (Exception ex){
             throw ex;
         }
@@ -45,6 +41,7 @@ public class GListResource extends BaseResource{
         EntityManager session = null;
         try {
             session = this.createSession();
+
             return session.find(GList.class, glistId);
         } catch (Exception ex){
             throw ex;
@@ -220,7 +217,7 @@ public class GListResource extends BaseResource{
             //Add a new Cart object to hold the purchase
             Cart cart = new Cart();
             java.util.Date curDate = new java.util.Date();
-            cart.setPurchase_time(new java.sql.Date(curDate.getTime()));
+            cart.setPurchase_date(new java.sql.Date(curDate.getTime()));
             cart.setGlist_id(glistId);
             session.persist(cart);
 
