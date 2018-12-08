@@ -9,7 +9,8 @@ ListEat is composed of 2 main components written in Java language:
 * Server Side – The current project (listeat)
 <br><br>
 
-![Screenshot](https://github.com/edibusl/listeat/blob/master/res/screenshot_app.png =250x)
+<img src="https://github.com/edibusl/listeat/blob/master/res/screenshot_app.png" alt="drawing" width="200"/>
+
 
 
 <br>
